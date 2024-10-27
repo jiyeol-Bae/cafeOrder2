@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>메뉴 목록</title>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>메뉴명</th>
+                <th>주문 가능</th>
+                <th>아이스 가능</th>
+                <th>핫 가능</th>
+                <th>카테고리</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.isOrderable}"></td>
+                <td th:text="${item.isIceAvailable}"></td>
+                <td th:text="${item.isHotAvailable}"></td>
+                <td th:text="${item.category != null ? item.category.name : ''}"></td>
+                <td>
+                    <a th:href="@{/items/{id}/edit(id=${item.id})}" class="btn btn-primary" role="button">수정</a>
+                </td>
+                <td>
+                    <form th:if="${!item.isDeleted}" th:action="@{/items/{id}/delete(id=${item.id})}" method="post">
+                        <button type="submit" class="btn btn-danger">삭제</button>
+                    </form>
+                    <form th:if="${item.isDeleted}" th:action="@{/items/{id}/restore(id=${item.id})}" method="post">
+                        <button type="submit" class="btn btn-success">복구</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+  <title>카테고리 목록</title>
+</head>
+<body>
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+  <div>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>카테고리명</th>
+        <th>설명</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="category : ${categories}">
+        <td th:text="${category.id}"></td>
+        <td th:text="${category.name}"></td>
+        <td th:text="${category.description}"></td>
+        <td>
+          <a th:href="@{/categories/{id}/edit(id=${category.id})}" class="btn btn-primary">수정</a>
+        </td>
+        <td>
+          <form th:if="${!category.isDeleted}" th:action="@{/categories/{id}/delete(id=${category.id})}" method="post">
+            <button type="submit" class="btn btn-danger">삭제</button>
+          </form>
+          <form th:if="${category.isDeleted}" th:action="@{/categories/{id}/restore(id=${category.id})}" method="post">
+            <button type="submit" class="btn btn-success">복구</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

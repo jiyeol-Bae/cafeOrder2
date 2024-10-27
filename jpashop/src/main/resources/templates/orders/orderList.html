@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>주문 목록</title>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>고객명</th>
+                <th>메뉴</th>
+                <th>수량</th>
+                <th>온도</th>
+                <th>상태</th>
+                <th>기타 요청사항</th>
+                <th>주문 시간</th>
+                <th>액션</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.customerName}"></td>
+                <td th:text="${order.orderItems[0].item.name}"></td>
+                <td th:text="${order.orderItems[0].quantity}"></td>
+                <td th:text="${order.orderItems[0].isIce ? '아이스' : (order.orderItems[0].isHot ? '핫' : '-')}"></td>
+                <td>
+                    <span th:switch="${order.status.name()}">
+                        <span th:case="'ORDER'" class="badge bg-primary">주문</span>
+                        <span th:case="'READY'" class="badge bg-success">완료</span>
+                        <span th:case="'CANCEL'" class="badge bg-danger">취소</span>
+                    </span>
+                </td>
+                <td th:text="${order.orderItems[0].etc}"></td>
+                <td th:text="${#temporals.format(order.orderTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td>
+                    <form th:if="${order.status.name() == 'ORDER'}" th:action="@{/orders/{id}/ready(id=${order.id})}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-primary">완료</button>
+                    </form>
+                    <form th:if="${order.status.name() == 'ORDER'}" th:action="@{/orders/{id}/cancel(id=${order.id})}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">취소</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<div class="header" th:fragment="bodyHeader">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">cafe order</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="categoryDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            카테고리 관리
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="categoryDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/categories">카테고리 목록</a></li>
+                            <li><a class="dropdown-item" href="/categories/new">카테고리 등록</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menuDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            메뉴 관리
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="menuDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/items">메뉴 목록</a></li>
+                            <li><a class="dropdown-item" href="/items/new">메뉴 등록</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="orderDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            주문 관리
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="orderDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/orders">주문 목록</a></li>
+                            <li><a class="dropdown-item" href="/orders/new">주문 하기</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

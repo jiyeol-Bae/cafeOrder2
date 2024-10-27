@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>주문</title>
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+    <form role="form" action="/orders/new" method="post">
+        <div class="form-group">
+            <label for="customerName">고객명</label>
+            <input type="text" name="customerName" class="form-control" id="customerName" placeholder="고객명을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="item">상품명</label>
+            <select name="itemId" id="item" class="form-control">
+                <option value="">상품선택</option>
+                <option th:each="item : ${items}"
+                        th:value="${item.id}"
+                        th:text="${item.name}"
+                        th:attr="data-ice=${item.isIceAvailable}, data-hot=${item.isHotAvailable}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="count">주문수량</label>
+            <input type="number" name="count" class="form-control" id="count" placeholder="주문 수량을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label>온도 선택</label>
+            <select name="temperature" id="temperature" class="form-control" disabled>
+                <option value="">선택</option>
+                <option value="ICE">아이스</option>
+                <option value="HOT">핫</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="etc">기타 요청사항</label>
+            <input type="text" name="etc" class="form-control" id="etc" placeholder="기타 요청사항을 입력하세요">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+<script>
+    document.getElementById('item').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var temperatureSelect = document.getElementById('temperature');
+        var isIceAvailable = selectedOption.dataset.ice === 'true';
+        var isHotAvailable = selectedOption.dataset.hot === 'true';
+
+        if (isIceAvailable && isHotAvailable) {
+            temperatureSelect.disabled = false;
+            temperatureSelect.value = '';
+        } else {
+            temperatureSelect.disabled = true;
+            if (isIceAvailable) {
+                temperatureSelect.value = 'ICE';
+            } else if (isHotAvailable) {
+                temperatureSelect.value = 'HOT';
+            } else {
+                temperatureSelect.value = '';
+            }
+        }
+
+        var iceOption = temperatureSelect.querySelector('option[value="ICE"]');
+        var hotOption = temperatureSelect.querySelector('option[value="HOT"]');
+
+        iceOption.disabled = !isIceAvailable;
+        hotOption.disabled = !isHotAvailable;
+    });
+</script>
+</body>
+</html>

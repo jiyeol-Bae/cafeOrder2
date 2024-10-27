@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+  <title>cafe Order</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+  <div class="jumbotron">
+    <h1>cafe Order</h1>
+    <p class="lead">카테고리 관리</p>
+    <p>
+      <a class="btn btn-lg btn-secondary" href="/categories/new">카테고리 등록</a>
+      <a class="btn btn-lg btn-secondary" href="/categories">카테고리 목록</a>
+    </p>
+    <p class="lead">메뉴 관리</p>
+    <p>
+      <a class="btn btn-lg btn-dark" href="/items/new">메뉴 등록</a>
+      <a class="btn btn-lg btn-dark" href="/items">메뉴 목록</a>
+    </p>
+    <p class="lead">주문 관리</p>
+    <p>
+      <a class="btn btn-lg btn-info" href="/orders">주문 내역</a>
+      <a class="btn btn-lg btn-primary" href="/orders/new">주문 하기</a>
+    </p>
+  </div>
+  <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>
