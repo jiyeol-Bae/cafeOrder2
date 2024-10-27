@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,9 +31,9 @@ import java.util.stream.Collectors;
 public class OrderApiController {
     private final OrderService orderService;
 
-    @Operation(
-            summary = "전체 주문 목록 조회",
-            description = "전체 주문 목록을 조회합니다.",
+    /*@Operation(
+            summary = "오늘 주문 목록 조회",
+            description = "오늘 주문 목록을 조회합니다.",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -44,6 +45,18 @@ public class OrderApiController {
                     )
             }
     )
+    @GetMapping("/api/v1/orders")
+    public Result getTodayOrders() {
+        List<Order> findOrders = orderService.findTodayOrders();
+
+        List<ItemApiController.ItemDto> collect = findOrders.stream()
+                //.filter(item -> !item.getStatus().equals(OrderStatus.CANCEL))
+                .map(item -> new OrderApiController.orderItemDto(item.getId(), item.getCustomerName(),
+                        item.getOrderItems().get(0).getItem().getName(), item.getOrderItems().get(0).getQuantity()
+                        , item.getOrderItems().get(0).getIsHot(), item.getOrderItems().get(0).getIsIce(), item.getStatus(), item.getOrderItems().get(0).getEtc(), item.getOrderTime())
+                .collect(Collectors.toList());
+        return new Result(collect);
+    }*/
 
 
     /**
@@ -126,5 +139,19 @@ public class OrderApiController {
         private int quantity;
         private String temperature;
         private String etc;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class orderItemDto {
+        private Long id;
+        private String customerName;
+        private String itemName;
+        private int quantity;
+        private Boolean isHot;
+        private Boolean isIce;
+        private OrderStatus orderStatus;
+        private String etc;
+        private LocalDateTime orderItems;
     }
 }
